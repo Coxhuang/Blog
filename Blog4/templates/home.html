@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load Pag_tags%}
+
+{% block extra_css %}
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <div id="fh5co-header">
+                <header id="fh5co-header-section">
+                    <div class="container">
+                        <div class="nav-header">
+                            <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+                            <h1 id="fh5co-logo">
+                                <a href="#guideBlog" class="scroll hvr-radial-out ">Coxhuang</a>
+                            </h1>
+                            <!-- START #fh5co-menu-wrap -->
+                            <nav id="fh5co-menu-wrap" role="navigation">
+                                <ul class="sf-menu " id="fh5co-primary-menu">
+                                    <li class="active">
+                                        <a href="/home/" >
+                                            <span class="ifont">Home</span>
+                                        </a>
+                                    </li>
+                                    <li >
+{#                                        <a href="home.html">Blog</a>#}
+{#                                        <a href="#guideBlog" class="scroll hvr-radial-out ">#}
+                                        <a href="/timeline/">
+                                            <span class="ifont">Blog</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/home/">
+                                            <span class="ifont">About</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.huangminhang.cn:8000">
+                                            <span class="ifont">Project</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="/messageboard/">
+                                            <span class="ifont">Msg Board</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+            <div class="fh5co-hero fh5co-hero-4">
+                <div class="fh5co-overlay"></div>
+                <div class="fh5co-cover fh5co-cover_4 text-center" data-stellar-background-ratio="0.5"
+                     style="background-image: url(/static/blog/home/images/1.jpg);">
+                    <div class="desc animate-box">
+                        <h2><a href="#guideBlog" class="scroll hvr-radial-out ">黄民航个人博客</a></h2>
+                    </div>
+                </div>
+            </div>
+            <!-- end:header-top -->
+
+            <div id="fh5co-blog-section" class="fh5co-section-gray">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+                            <br class="guideBlog" id="guideBlog"><br><br><br><br><br>
+                            <h3 >Recent From Blog</h3>
+                            <p>What you see is what you get</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+
+
+
+
+
+                    <div class="row">
+                        {% for obj in obj_list %}
+                            <div class="col-lg-4 col-md-4" id="contentBlog">
+                                <div class="fh5co-blog animate-box">
+                                    <a href="{% url "content_url" obj.id%}">
+                                        <img width="300" height="300"  src="/{{ obj.img }}" alt="">
+{#                                        <img width="200" height="200" class="img-responsive" src="/static/blog/home/imgs/zipimgs/{{ obj.img_name }}.jpeg" alt="">#}
+                                    </a>
+                                    <div class="blog-text">
+                                        <div class="prod-title">
+                                            <h3><a href="{% url "content_url" obj.id%}">{{ obj.title }}</a></h3>
+                                            <span class="posted_by">{{ obj.date }}</span>
+                                            <span class="comment"><a href="{% url "content_url" obj.id%}"><i class="icon-bubble2"></i></a></span>
+                                            <div style="height:60px;">{{ obj.primary|safe }}</div>
+                                            <a href="{% url "content_url" obj.id%}" class="btn btn-primary">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+            {#--------------------------------------分页#}
+            <div style="text-align: center">
+                {% Pag_ele obj_list%}
+            </div>
+            {#--------------------------------------分页#}
+
+
+            <footer >
+                <div class="text-center">
+
+                    <h5>Copyright © 2018 Coxhuang 辽ICP备18009359号-1</h5>
+
+                </div>
+
+            </footer>
+        </div>
+        <!-- END fh5co-page -->
+
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+    {#<!-- Superfish -->#}
+    <script src="/static/blog/home/js/hoverIntent.js"></script>
+    <script src="/static/blog/home/js/superfish.js"></script>
+
+
+
+    <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $(".scroll").click(function (event) {
+                    event.preventDefault();
+                    $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
+                });
+            });
+    </script>
+
+{% endblock %}

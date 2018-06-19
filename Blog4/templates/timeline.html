@@ -1,0 +1,57 @@
+{% extends "base_navigation.html" %}
+
+{% block exter-css-navigation%}
+    <link rel="stylesheet" href="/static/blog/timeline/css/reset.css"/>
+    <link rel="stylesheet" href="/static/blog/timeline/css/timeline.css">
+    <script src="/static/blog/timeline/js/timeline.js"></script>
+    <title>timeline</title>
+{% endblock %}
+
+
+{% block exter-body-navigation%}
+    <div class="container">
+    <ul id="timeline" class="timeline">
+
+        {% for obj in obj_list %}
+            <li>
+                <div class="check">
+                    <b class="spring"></b>
+                    <s></s>
+                    <b class="line"></b>
+                </div>
+                <div class="thumb">
+                    <a href="{% url "content_url" obj.id%}"><img src="/{{ obj.img }}" alt=""></a>
+                    <span>{{ obj.date }}</span>
+                </div>
+                <div class="content">
+                    <b></b>
+                    <a href="{% url "content_url" obj.id%}" style="color: black">
+                        <h3>{{ obj.title }}</h3>
+                    </a>
+
+                    <p>
+                        {{ obj.primary }}
+                    </p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+    <script>
+        $(function () {
+            addattr();
+        });
+        function addattr() {
+            $("#timeline").children(":first").attr("class", "active");
+
+        }
+    </script>
+
+
+{% endblock %}
+
+{% block exter-js-navigation%}
+
+
+{% endblock %}

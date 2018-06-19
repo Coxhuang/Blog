@@ -1,0 +1,149 @@
+{% extends "base_navigation.html" %}
+
+{% block exter-css-navigation%}
+    <link rel="stylesheet" href="/static/blog/messageboard/css/style.css">
+    <title>messageboard</title>
+{% endblock %}
+
+
+
+
+{% block exter-body-navigation%}
+    <div id="msgBox">
+    <form id="formId">
+        <h2>随便说点什么吧...</h2>
+        <div>
+            <input id="userName" class="f-text" value="" name="userNamename" placeholder="输入昵称...">
+        </div>
+        <div>
+            <textarea id="conBox" maxlength="140" name="conBoxname" oninput="mouseFocus();" class="f-text"></textarea>
+        </div>
+        <div class="tr">
+            <p>
+                <span class="countTxt">还能输入</span>
+                <strong class="maxNum" id="displayNum">140</strong>
+                <span>个字</span>
+                <input id="sendBtn" type="button" value="" title="快捷键 Ctrl+Enter" onclick="addcontent();">
+            </p>
+        </div>
+    </form>
+
+
+
+    <div class="list">
+        <h3>
+            <span>大家在说</span>
+        </h3>
+        <ul id="ulcontent">
+            {% for obj in obj_list %}
+                <li>
+                <div class="userPic">
+                    <img height="50" width="50" src="/static/blog/messageboard/img/{{ obj.userimg }}.gif">
+                </div>
+                <div class="content">
+                    <div class="userName">
+                        <a href="javascript:">{{ obj.username }}:</a>
+                    </div>
+                    <div class="msgInfo">{{ obj.content }}</div>
+                    <div class="times">
+                        <span>{{ obj.date|date:"m月d日  H:i" }}</span>
+{#                        {{ infor.updatetime|date:"Y-m-d H:i:s" }}#}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    <script>
+
+
+    //格式化时间, 如果为一位数时补0
+	function format(str)
+	{
+		return str.toString().replace(/^(\d)$/,"0$1")
+	}
+
+	function mouseFocus() {
+        var Msgcontent = $("#conBox").val();
+        var overplus = 140;
+        overplus = 140 - Msgcontent.length;
+        $("#displayNum").text(overplus);
+        if(Msgcontent.length == 140){
+            alert("不能再输入了.")
+        }
+    }
+
+    function addcontent() {
+	    var username = $("#userName").val();
+	    if(username==""){
+	        alert("请输入昵称喔!");
+            return;
+        }
+        var Msgcontent = $("#conBox").val();
+	    if(Msgcontent==""){
+	        alert("请输入内容喔!");
+            return;
+        }
+	    $.ajax({
+	        url:"/msgajax/",
+            type:"GET",
+            dataType:"JSON",
+            data:$("#formId").serialize(),
+            success:function (arg) {
+	            var imgNum = arg["imgNum"];
+	            var userName = arg["userName"];
+	            var userContent = arg["userContent"];
+                var newEleLiNote = document.createElement("li");    //创建一个新的li元素
+                var getEleId = document.getElementById("ulcontent");
+                var oli = getEleId.getElementsByTagName("li")[0];
+                var newEleLi = getEleId.insertBefore(newEleLiNote,oli);
+
+                var newEleDivNoteuserPic = document.createElement("div");
+                var newEleDivuserPic = newEleLi.appendChild(newEleDivNoteuserPic);
+                newEleDivuserPic.className = "userPic";
+                var newEleImgNote = document.createElement("img");
+                var newEleImguserPic = newEleDivuserPic.appendChild(newEleImgNote);
+                newEleImguserPic.height = "50";
+                newEleImguserPic.width = "50";
+                newEleImguserPic.src = "/static/blog/messageboard/img/"+imgNum+".gif";
+
+                var newEleDivNotecontent = document.createElement("div");
+                var newEleDivcontent = newEleLi.appendChild(newEleDivNotecontent);
+                newEleDivcontent.className = "content";
+
+                var newEleDivNoteuserName = document.createElement("div");
+                var newEleDivuserName = newEleDivcontent.appendChild(newEleDivNoteuserName);
+                newEleDivuserName.className = "userName";
+                var newEleANoteuserName = document.createElement("a");
+                var newEleAuserName = newEleDivuserName.appendChild(newEleANoteuserName);
+                newEleAuserName.href = "javascript:";
+                newEleAuserName.innerText = userName+":";
+
+                var newEleDivNotemsgInfo = document.createElement("div");
+                var newEleDivmsgInfo = newEleDivcontent.appendChild(newEleDivNotemsgInfo);
+                newEleDivmsgInfo.className = "msgInfo";
+                newEleDivmsgInfo.innerText = userContent;
+
+                var newEleDivNotetimes = document.createElement("div");
+                var newEleDivtimes = newEleDivcontent.appendChild(newEleDivNotetimes);
+                newEleDivtimes.className = "times";
+                var oDate = new Date();
+                newEleDivtimes.innerText = format(oDate.getMonth() + 1) + "\u6708" + format(oDate.getDate()) + "\u65e5 " + format(oDate.getHours()) + ":" + format(oDate.getMinutes());
+            }
+        });
+
+
+
+    }
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+

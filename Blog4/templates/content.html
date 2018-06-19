@@ -1,0 +1,86 @@
+{% extends "base_content.html" %}
+
+
+
+
+{% block body %}
+
+
+    <div class="fh5co-loader"></div>
+
+    <div id="page">
+
+        <div id="fh5co-aside" style="background-image: url(/{{ obj_list.1.img }})" data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <nav role="navigation">
+                <ul>
+                    <li><a href="/home/"><i class="icon-home"></i></a></li>
+                </ul>
+            </nav>
+            <div class="page-title">
+                <img src="/static/blog/content/imgs/QQ.jpg" >
+                <span>{{ obj_list.1.date }}</span>
+                <h2>{{ obj_list.1.title }}</h2>
+            </div>
+        </div>
+        <div id="fh5co-main-content">
+            <div class="fh5co-post">
+                <div class="fh5co-entry padding">
+                    <div>
+                        <p>{{ obj_list.1.details.content|safe }}</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="fh5co-navigation">
+        <div class="fh5co-cover prev fh5co-cover-sm" style="background-image: url(/{{ obj_list.0.img }})">
+            <div class="overlay"></div>
+
+            <a class="copy" href="{% url "content_url" obj_list.0.id%}">
+                <div class="display-t">
+                    <div class="display-tc">
+                        <div>
+                            <span>Previous Post</span>
+                            <h2>{{ obj_list.0.title }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+        <div class="fh5co-cover next fh5co-cover-sm" style="background-image: url(/{{ obj_list.2.img }})">
+            <div class="overlay"></div>
+            <a class="copy" href="{% url "content_url" obj_list.2.id%}">
+                <div class="display-t">
+                    <div class="display-tc" >
+                        <div>
+                            <span>Next Post</span>
+                            <h2>{{ obj_list.2.title }}  </h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            &copy; 2018 . Designed by <a href="" target="_blank">Coxhuang</a>
+        </div>
+    </footer>
+
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+    </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+{% endblock %}
